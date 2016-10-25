@@ -10,15 +10,33 @@
     "license": "AGPL-3.0",
     "extends": "classic",
     "devStyles": [
-        "styles/embed.css"
+        "styles/reset.css",
+        "styles/embed.css",
+        "styles/dropdown.css",
+        "styles/justifiedGallery.min.css",
+        "styles/photoswipe.css",
+        "styles/default-skin/default-skin.css",
+        "https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic",
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     ],
     "styles": [
+        "https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic",
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css",
         "dist/styles.min.css"
     ],
     "devScripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.2.2/ng-infinite-scroll.min.js",
+        "vendors/angular-gettext.js",
+        "vendors/jquery.justifiedGallery.min.js",
+        "vendors/photoswipe.min.js",
+        "vendors/photoswipe-ui-default.min.js",
+        "vendors/jquery.photoswipe-global.js",
         "main.js"
     ],
     "scripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.2.2/ng-infinite-scroll.min.js",
         "dist/scripts.min.js"
     ],
     "options": []

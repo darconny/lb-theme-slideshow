@@ -2,9 +2,9 @@
     <div class="lb-timeline__header">
         <h1 ng-if="timeline.settings.showTitle" ng-bind="timeline.blog.title"></h1>
         <div class="illustration" ng-if="timeline.blog.picture_url && timeline.settings.showImage" ng-cloak>
-            <img ng-src="{{ timeline.blog.picture_url }}" srcset="{{ timeline.blog.picture_srcset }}" sizes="100vw"/>
+            <img ng-src="{{ timeline.blog.picture_url }}" ng-srcset="{{ timeline.blog.picture_srcset }}" sizes="100vw"/>
         </div>
-        <p class="description" ng-if="timeline.settings.showDescription" ng-bind="timeline.blog.description"></p>
+        <p class="description" ng-if="timeline.settings.showDescription" ng-bind-html="timeline.blog.descriptionHtml"></p>
     </div>
     <div class="header-bar">
         <div class="sorting-bar">
@@ -41,9 +41,9 @@
             </div>
             <button
                 ng-if="timeline.settings.canComment"
-                class="btn ng-cloak"
+                class="btn comment ng-cloak"
                 ng-class="{'active': timeline.comment}"
-                ng-click="timeline.comment = !timeline.comment" translate>Comment</button>
+                ng-click="timeline.comment = !timeline.comment"><i class="fa fa-comment"></i>{{ :: "Comment" | translate }}</button>
         </div>
         <div class="header-bar__logo">
             <a href="https://www.sourcefabric.org/liveblog/" target="_blank">
@@ -63,11 +63,11 @@
             class="lb-posts list-group"
             infinite-scroll="timeline.fetchNewPage()"
             infinite-scroll-disabled="!timeline.settings.infinitScroll || !timeline.isAllowedToLoadMore()"
-            infinite-scroll-immediate-check="false">
+            infinite-scroll-immediate-check="true">
             <div class="lb-post load-new-posts"
                  ng-click="timeline.applyUpdates()"
-                 ng-show="timeline.settings.loadNewPostsManually && timeline.newPosts.length > 0"
-                 translate translate-n="timeline.newPosts.length"
+                 ng-show="timeline.settings.loadNewPostsManually && (timeline.newPosts.length > 0 || timeline.newStickyPosts.length > 0)"
+                 translate translate-n="timeline.newPosts.length + timeline.newStickyPosts.length"
                  translate-plural="See {{$count}} new updates" ng-cloak>
                 See one new update
             </div>
@@ -75,7 +75,7 @@
                 ng-if='!timeline.stickyPagesManager.hideSticky'
                 timeline="timeline"
                 posts="timeline.stickyPagesManager.allPosts"
-                class="pin-posts" ng-cloak></lb-posts>
+                class="pin-posts" ng-if="!timeline.loading" ng-cloak></lb-posts>
 
             <div ng-if="timeline.stickyPagesManager.allPosts().length && !timeline.loading"
                 class="pin-drawer" ng-cloak>
@@ -91,11 +91,60 @@
                     <i class="fa fa-chevron-up fa-chevron-fix"></i>
                 </button>
             </div>
-            <lb-posts timeline="timeline" posts="timeline.pagesManager.allPosts"></lb-posts>
+            <lb-slide-posts timeline="timeline" posts="timeline.pagesManager.allPosts" ng-if="!timeline.loading"></lb-slide-posts>
         </section>
         <button ng-click="timeline.fetchNewPage()"
                 class="ng-cloak"
                 ng-if="!timeline.settings.infinitScroll && timeline.isAllowedToLoadMore()" translate>Load more posts</button>
         <div class="loading" ng-show="timeline.loading" translate>Loading</div>
+    </div>
+</div>
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
     </div>
 </div>
