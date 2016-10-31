@@ -1,7 +1,7 @@
 {
     "label": "Slideshow Theme",
     "name": "slideshow",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Vlad Nicoara <vlad.nicoara@sourcefabric.org>",
     "repository": {
         "type": "git",
@@ -10,9 +10,7 @@
     "license": "AGPL-3.0",
     "extends": "classic",
     "devStyles": [
-        "styles/reset.css",
         "styles/embed.css",
-        "styles/dropdown.css",
         "styles/justifiedGallery.min.css",
         "styles/photoswipe.css",
         "styles/default-skin/default-skin.css",

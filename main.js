@@ -1,8 +1,5 @@
 (function(angular) {
     'use strict';
-    console.log('main.js slideshow');
-    
-
     function GalleryCtrl() {
         var vm = this;
         // Filter posts getting only images
